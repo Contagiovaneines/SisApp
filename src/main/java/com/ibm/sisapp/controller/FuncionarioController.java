@@ -3,7 +3,12 @@ package com.ibm.sisapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.ibm.sisapp.model.DadosCadastroFuncionario;
 import com.ibm.sisapp.model.Funcionario;
@@ -12,33 +17,28 @@ import com.ibm.sisapp.repository.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 
 @Controller
+@RequestMapping("/funcionario")
 public class FuncionarioController {
 
     @Autowired
     private FuncionarioRepository repository;
 
-    // Método para abrir a página principal (index)
-    @GetMapping("/") // Mapeie para a raiz do aplicativo
-    public String index() {
-        return "index"; // Retorna a página index.html na raiz
-    }
-
     // Método para abrir o formulário de cadastro
-    @GetMapping("/funcionario")
+    @GetMapping
     public String abreFormFuncionario(Model model) {
         model.addAttribute("funcionario", new Funcionario()); // Para novo funcionário
         return "funcionario/formFuncionario"; // A página do formulário
     }
 
     // Método para listar os funcionários
-    @GetMapping("/funcionario/listagem")
+    @GetMapping("/listagem")
     public String carregaPaginaListagem(Model model) {
-        model.addAttribute("lista", repository.findAll()); // Passa a lista para a view
+        model.addAttribute("lista", repository.findAll()); // Passa a lista para view
         return "funcionario/listagem"; // Retorna a view de listagem
     }
 
     // Método para carregar o formulário de edição
-    @GetMapping("/funcionario/formFuncionario")
+    @GetMapping("/formFuncionario")
     public String carregaFormularioEdicao(@RequestParam Long id, Model model) {
         Funcionario funcionario = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Funcionário inválido: " + id));
@@ -47,9 +47,9 @@ public class FuncionarioController {
     }
 
     // Método para cadastrar ou atualizar o funcionário
-    @PostMapping("/funcionario")
+    @PostMapping
     @Transactional
-    public String cadastraFuncionario(@ModelAttribute DadosCadastroFuncionario dados) {
+    public String cadastraFuncionario(DadosCadastroFuncionario dados) {
         Funcionario funcionario;
 
         if (dados.id() != null) { // Verifica se é uma atualização
@@ -65,15 +65,11 @@ public class FuncionarioController {
     }
 
     // Método para remover o funcionário
-    @DeleteMapping("/funcionario/{id}")
+    @DeleteMapping
     @Transactional
-    public String removeFuncionario(@PathVariable Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            System.out.println("Funcionário EXCLUÍDO!");
-        } else {
-            System.out.println("Funcionário não encontrado: " + id);
-        }
+    public String removeFuncionario(@RequestParam Long id) {
+        repository.deleteById(id);
+        System.out.println("Funcionário EXCLUÍDO!");
         return "redirect:/funcionario/listagem"; // Redireciona para a listagem
     }
 }
