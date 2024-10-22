@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Opções</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 400px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            background-color: #fff; /* Fundo da card */
+        }
+        h3 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #007bff; /* Cor do texto do título */
+        }
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px; /* Tamanho da fonte da mensagem de boas-vindas */
+            color: #28a745; /* Cor verde para a mensagem de boas-vindas */
+        }
+        .btn {
+            width: 100%;
+            margin-bottom: 15px;
+            transition: background-color 0.3s, transform 0.2s; /* Animação ao passar o mouse */
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Tom mais escuro ao passar o mouse no botão primário */
+            transform: scale(1.05); /* Aumenta ligeiramente o botão */
+        }
+        .btn-secondary:hover {
+            background-color: #0056b3; /* Tom mais escuro ao passar o mouse no botão secundário */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="welcome-message">
+                Seja Bem-Vindo!
+            </div>
+            <h3>Escolha uma Opção</h3>
+            <a th:href="@{/funcionario}" class="btn btn-primary">Ir para Formulário de Funcionário</a>
+            <a th:href="@{/funcionario/listagem}" class="btn btn-secondary">Ir para Listagem</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
